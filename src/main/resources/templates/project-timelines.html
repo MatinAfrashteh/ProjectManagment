@@ -1,0 +1,72 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+
+</head>
+<body>
+<nav th:replace="layouts :: foo"></nav>
+
+<br>
+
+<h2 class="text-center"> Project Timelines </h2>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    var chartData = "[[${projectTimeList}]]";
+    var chartDataDecoded = decodeHtml(chartData);
+
+    try {
+        var chartJsonArray = JSON.parse(chartDataDecoded);
+        console.log("Received Data:", chartJsonArray);
+    } catch (e) {
+        console.error("Error parsing JSON data:", e);
+        chartJsonArray = [];
+    }
+
+    var resultArray = [];
+    chartJsonArray.forEach(function (item) {
+        if (item.name && item.startDate && item.endDate) {
+            resultArray.push([
+                item.name,
+                new Date(Number(item.startDate)),
+                new Date(Number(item.endDate)),
+            ]);
+        } else {
+            console.error("Missing data for project:", item);
+        }
+    });
+    var options = {
+        width: 2000, // عرض چارت (پیکسل)
+        height: 500, // ارتفاع چارت (پیکسل)
+    };
+    google.charts.load('current', {packages: ['timeline']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var container = document.getElementById('chart_div');
+        var chart = new google.visualization.Timeline(container);
+        var dataTable = new google.visualization.DataTable();
+
+        dataTable.addColumn({type: 'string', id: 'Project'});
+        dataTable.addColumn({type: 'date', id: 'Start'});
+        dataTable.addColumn({type: 'date', id: 'End'});
+
+        dataTable.addRows(resultArray);
+        chart.draw(dataTable,options);
+    }
+
+    function decodeHtml(html) {
+        var txt = document.createElement("textarea");
+        txt.innerHTML = html;
+        return txt.value;
+    }
+
+
+</script>
+
+<div id="chart_div"></div>
+
+</body>
+
+</html>
+

@@ -1,0 +1,130 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<nav th:replace="layouts :: foo"></nav>
+<div class="container">
+
+
+    <h3>Main Dashboard</h3>
+
+    <hr>
+    <h4> Current Projects </h4>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th> Project Name</th>
+                    <th> Project Stage</th>
+                    <th> Action </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="emploEntitycount : ${emplocount}">
+                    <td th:text="${emploEntitycount.fname}"></td>
+                    <td th:text="${emploEntitycount.lname}"></td>
+                    <td>
+                    <a th:href="@{/Employee/update/id/{id}(id=${emploEntitycount.id})}"
+                    class="btn btn-info btn-sm">
+                    UPDATE
+                    </a>
+
+                    <a th:href="@{/Employee/delete/id/{id}(id=${emploEntitycount.id})}"
+                           class="btn btn-danger btn-sm"
+                           onClick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">
+                            DELETE
+                    </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <canvas id="MyPieChart" height="50" width="50"></canvas>
+
+            <script>
+                    var chartdata ="[[${JaSonDAtaChart}]]"
+            </script>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h4> Current Employees </h4>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th> Name</th>
+                    <th> Stage</th>
+                    <th> description</th>
+                    <th> Start Date</th>
+                    <th> end Date</th>
+                    <th> Action </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="proj : ${pro}">
+                    <th th:text="${proj.name}"></th>
+                    <th th:text="${proj.stage}"></th>
+                    <th th:text="${proj.description}"></th>
+                    <th th:text="${proj.startDate}"></th>
+                    <th th:text="${proj.endDate}"></th>
+                    <td>
+                        <a th:href="@{/projects/update/id/{id}(id=${proj.projectid})}"
+                           class="btn btn-info btn-sm">
+                            UPDATE
+                        </a>
+
+                        <a th:href="@{/projects/delete/id/{id}(id=${proj.projectid})}"
+                           class="btn btn-danger btn-sm"
+                           onClick="if (!(confirm('Are you sure you want to delete this project?'))) return false">
+                            DELETE
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+var charts = decode(chartdata);
+var chartjason = JSON.parse(charts);
+var charlength = chartjason.length;
+
+var numberDATA =[];
+var labelDATA =[];
+
+for (i = 0; i< charlength; i++){
+    numberDATA[i] = chartjason[i].value;
+    labelDATA[i] = chartjason[i].label;
+}
+    new Chart(document.getElementById("MyPieChart"), {
+        type: 'pie',
+        data: {
+            labels: labelDATA,
+            datasets: [{
+                label: 'My First Dataset',
+                data: numberDATA,
+                backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'
+                ],
+                hoverOffset: 4
+            }]
+        },
+        optons: {}
+    });
+
+function decode(html) {
+    var txt =document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,87 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+
+</head>
+<body>
+<!--<div id="timeline" style="height: 180px;"></div>-->
+<nav th:replace="layouts :: foo"></nav>
+<div class="container">
+    <div class="form-group row">
+        <form action="/projects/save" th:object="${project}" method="post">
+
+            <input type="hidden" th:field="${project.projectid}">
+
+            <div class="form-group row">
+                <label>
+                    <input type="text" placeholder="Project Name" th:field="${project.name}">
+                    <span style="color: blue" th:if="${#fields.hasErrors('name')}"
+                          th:errors="${project.name}">
+            </span>
+                </label></div>
+            <div class="form-group row">
+                <label>
+                    <select th:field="${project.stage}">
+                        <option th:value="NOTSTARTED"> Not Started</option>
+                        <option th:value="INPROGRESS"> In Progress</option>
+                        <option th:value="COMPLETED"> Completed</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-group row">
+                <label>
+                    <textarea type="text" placeholder="Enter Project Description"
+                              th:field="${project.description}">
+                    </textarea>
+                    <span style="color: blue" th:if="${#fields.hasErrors('description')}"
+                          th:errors="${project.description}">
+            </span>
+                </label>
+            </div>
+
+            <div class="form-group row">
+                <label>
+                    <select th:field="${project.employeeEntityList}" multiple="multiple">
+                        <option th:each="employees : ${allemployees}"
+                                th:value="${employees.id}"
+                                th:text="${employees.fname}">
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            Project Start Date:
+            <br>
+            <div class="form-group row">
+                <input id="dp3" type="text" class="mb-32 col-8 col-xs-16" value="Start Date" th:field="${project.startDate}">
+                <span style="color: blue" th:if="${#fields.hasErrors('startDate')}"
+                      th:errors="${project.startDate}">
+            </span>
+            </div>
+
+
+            Project End Date:
+            <br>
+            <div class="form-group row">
+                <input id="dp4" type="text" class="mb-32 col-8 col-xs-16" value="End Date" th:field="${project.endDate}">
+                <span style="color: blue" th:if="${#fields.hasErrors('endDate')}"
+                      th:errors="${project.endDate}">
+            </span>
+            </div>
+
+            <script type="text/javascript">
+                $('#dp3').datepicker();
+                $('#dp4').datepicker();
+            </script>
+
+            <button class="btn btn-info " type="submit">Create Project</button>
+
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+
+        </form>
+    </div>
+</div>
+
+</body>
+
+</html>
