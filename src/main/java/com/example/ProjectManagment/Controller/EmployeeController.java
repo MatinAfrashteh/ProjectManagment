@@ -15,11 +15,13 @@ import java.util.List;
 @Controller
 @RequestMapping("/Employee")
 public class EmployeeController {
+
     @Autowired
     EmployeeService empServices;
 
     @Autowired
     EmployeeRepository emps;
+
     @GetMapping("")
     public String display(Model model) {
         List<EmployeeEntity> emploentity = empServices.findAll();
@@ -47,10 +49,10 @@ public class EmployeeController {
     }
 
     @GetMapping("/update/id/{id}")
-    public String update(@PathVariable("id") int id,  Model model){
-        EmployeeEntity employeeEntity = emps.findById(id); // یافتن موجودیت از طریق ID
-        model.addAttribute("employee", employeeEntity); // اضافه کردن موجودیت به مدل
-        return "Employee"; // نمایش فرم ویرایش
+    public String update(@PathVariable("id") long id,  Model model){
+        EmployeeEntity employeeEntity = emps.findById(id);
+        model.addAttribute("employee", employeeEntity);
+        return "Employee";
     }
 
     @GetMapping("/delete/id/{id}")

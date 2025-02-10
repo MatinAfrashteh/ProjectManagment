@@ -17,7 +17,7 @@ public interface EmployeeRepository<U, L extends Number> extends JpaRepository<E
 
     EmployeeEntity findByemail(String value);
 
-    public EmployeeEntity findById(int id);
+    public EmployeeEntity findById(Long id);
 
 
 }

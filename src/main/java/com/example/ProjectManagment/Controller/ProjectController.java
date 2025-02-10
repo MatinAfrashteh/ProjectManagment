@@ -81,7 +81,7 @@ public class ProjectController {
 
     @GetMapping("/update/id/{id}")
     public String Update(@PathVariable("id") int id ,Model model){
-        Optional<ProjectTable> projectTable =proj.findById(id);
+        ProjectTable projectTable =proj.findById(id);
         model.addAttribute("project",projectTable);
         return "NewProject";
     }

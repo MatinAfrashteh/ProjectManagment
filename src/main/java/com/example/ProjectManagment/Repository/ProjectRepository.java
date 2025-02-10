@@ -20,4 +20,8 @@ public interface ProjectRepository extends JpaRepository<ProjectTable,Integer> {
     List<TimeListChart> timelinechart();
 
     void delete(ProjectTable projectTable);
+
+    ProjectTable findById(long id);
+
+
 }

@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.ProjectManagment.Entities.ProjectTable;
+import com.example.ProjectManagment.Repository.CharData;
 import com.example.ProjectManagment.Repository.ProjectRepository;
+import com.example.ProjectManagment.Repository.TimeListChart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,19 +27,12 @@ public class ProjectService {
     }
 
     public Optional<ProjectTable> findById(int id) {
-        return proRepo.findById(id);
+        return Optional.ofNullable(proRepo.findById(id));
     }
 
     public void Delete(ProjectTable projectTable) {
         proRepo.delete(projectTable);
     }
 
-//    public List<ChartData> getProjectStatus(){
-//        return proRepo.getProjectStatus();
-//    }
-//
-//
-//    public List<TimeChartData> getTimeData(){
-//        return proRepo.getTimeData();
-//    }
-}
+    }
+

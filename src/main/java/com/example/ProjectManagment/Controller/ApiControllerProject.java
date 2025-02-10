@@ -28,7 +28,7 @@ public class ApiControllerProject {
 
     @GetMapping("/{id}")
     public ProjectTable getProjectById(@PathVariable("id") Long id) {
-        return proRepo.findById(Math.toIntExact(id)).get();
+        return proRepo.findById(id);
     }
 
     @PostMapping(consumes = "application/json",value = "/new")
@@ -43,18 +43,17 @@ public class ApiControllerProject {
         return proRepo.save(project);
     }
 
-    @PatchMapping(path="/{id}", consumes= "application/json")
-    public ProjectTable partialUpdate(@PathVariable("id") long id, @RequestBody ProjectTable patchProject) {
-        ProjectTable project = proRepo.findById((int) id).get();
+    @PatchMapping(path = "/{id}" , consumes = "application/jason")
+    public ProjectTable patch(@PathVariable("id") long id , @RequestParam ProjectTable projectTable){
+        ProjectTable project=proRepo.findById(id);
 
-        if(patchProject.getName() != null) {
-            project.setName(patchProject.getName());
+        if (projectTable.getName()!= null){
+            project.setName(projectTable.getName());
         }
-        if(patchProject.getStage() != null) {
-            project.setStage(patchProject.getStage());
-        }
-        if(patchProject.getDescription() != null) {
-            project.setDescription(patchProject.getDescription());
+        if (projectTable.getStage()!= null){
+            project.setStage(projectTable.getStage());
+        }if (projectTable.getDescription()!= null){
+            project.setName(projectTable.getDescription());
         }
 
         return proRepo.save(project);
@@ -78,8 +77,8 @@ public class ApiControllerProject {
                                    @RequestParam("direction")String  direction){
 
         Sort sort = direction.equalsIgnoreCase("asc")?
-                Sort.by(sortby).ascending() :
-                Sort.by(sortby).descending() ;
+                Sort.by(sortby).ascending():
+                Sort.by(sortby).descending();
         Pageable pageable = PageRequest.of(page,size,sort);
         return proRepo.findAll(pageable);
     }

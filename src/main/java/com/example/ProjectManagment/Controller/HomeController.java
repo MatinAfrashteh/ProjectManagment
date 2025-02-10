@@ -32,6 +32,7 @@ public class HomeController {
         model.addAttribute("emplocount", emploEntitycount);
 
         List<CharData> chartdata = projectRepository.getproject();
+
         ObjectMapper objectMapper = new ObjectMapper();
         String jasons = objectMapper.writeValueAsString(chartdata);
         model.addAttribute("JaSonDAtaChart",jasons);

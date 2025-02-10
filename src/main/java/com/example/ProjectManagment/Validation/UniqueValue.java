@@ -8,12 +8,12 @@ import java.lang.annotation.Target;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-@Target({ElementType.FIELD})  // این انوتیشن روی فیلدها استفاده می‌شود
-@Retention(RetentionPolicy.RUNTIME)  // این انوتیشن در زمان اجرا قابل دسترسی است
-@Constraint(validatedBy = UniqueValidator.class)  // کلاس اعتبارسنجی مرتبط
+@Target({ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = UniqueValidator.class)
 public @interface UniqueValue {
 
-    String message() default "ایمیل وارد شده تکراری است.";  // پیام پیش‌فرض خطا
+    String message() default "The email entered is a duplicate.";
 
     Class<?>[] groups() default {};
 

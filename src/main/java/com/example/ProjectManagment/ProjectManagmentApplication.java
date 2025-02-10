@@ -12,10 +12,10 @@ public class ProjectManagmentApplication{
 
 //	@Bean
 //	CommandLineRunner runner(){
-//		return kirkhar ->{
-//			EmployeeEntity emp1 = new EmployeeEntity("ali","koskashian","alikoskashian@gmail.com");
+//		return test ->{
+//			EmployeeEntity emp1 = new EmployeeEntity("ali","akbari","aliakbari@gmail.com");
 //
-//			ProjectTable pro1 = new ProjectTable("instagram","COMPLETED","kosisher");
+//			ProjectTable pro1 = new ProjectTable("instagram","COMPLETED","lalala");
 //
 //			pro1.addEmployee(emp1);
 //

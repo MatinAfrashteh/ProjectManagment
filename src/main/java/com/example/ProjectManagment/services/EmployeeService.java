@@ -35,7 +35,7 @@ public class EmployeeService {
         empRepo.delete(theEmp);
 
     }
-    public EmployeeEntity findById(int id){
+    public EmployeeEntity findById(long id){
         return empRepo.findById(id);
     }
 
